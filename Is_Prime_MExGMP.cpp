@@ -18,94 +18,71 @@ int Is_Prime_GMP(const mpz_t n, int reps); // primality test GMP
     mpz_clear(n);
   }
 
-  static void Is_Prime_GMP(benchmark::State& state) 
-  {
+static void BM_Is_Prime_GMP(benchmark::State &state) 
+{
     mpz_t n;
     mpz_init_set_str(n, "1296005097246682578520326409", 10); // Número para teste
       for (auto _ : state) 
       {
-        Is_Prime_GMP(n, 5); // 5 iterações do teste de primalidade
+        // Is_Prime_GMP(n, 5); // 5 iterações do teste de primalidade
+        benchmark::DoNotOptimize(mpz_probab_prime_p(n, 5));
       }
+      
     mpz_clear(n);
-  }
+}
 
 BENCHMARK(Is_Prime_ME);
-BENCHMARK(Is_Prime_GMP);
+BENCHMARK(BM_Is_Prime_GMP);
 
 BENCHMARK_MAIN();
 
-int Is_Prime_GMP(const mpz_t n, int reps) // primality test GMP
+
+int Is_Prime_GMP(const mpz_t n, int reps) 
 {
-  return mpz_probab_prime_p(n, reps); 
+  mpz_probab_prime_p(n, reps);
 }
-int Is_Prime_ME(const mpz_t n, int reps)
+int Is_Prime_ME(const mpz_t n, int reps) 
 {
-    mpz_t a, x, y, n_1, d, temp, exp_r_d;
+    mpz_t a, x, y, n_1, d;
     size_t i, r, s = 0;
-    int pode_ser_primo = 1; // 1 = provavelmente primo, 0 = com certeza composto
 
     gmp_randstate_t state;
     gmp_randinit_default(state);
-    gmp_randseed_ui(state, time(NULL));
 
-    mpz_inits(a, x, y, n_1, d, temp, exp_r_d, NULL);
+    mpz_inits(a, x, y, n_1, d, NULL);
     mpz_sub_ui(n_1, n, 1); // n_1 = n - 1
 
     // Calcula s (máximo r tal que 2^r divide (n-1))
-    mpz_set(temp, n_1);
-    mpz_set_ui(d, 1);
-    
-    while (mpz_even_p(temp)) // enquanto temp for par (temp % 2 = 0)
-    {
-        mpz_fdiv_q_2exp(temp, temp, 1); // temp = temp / 2
-        s++;
-        mpz_mul_2exp(d, d, 1); // d = d * (2^1)
-    }
+    //n − 1 = 2s.d
 
-    // d = (n-1) / 2^s
-    mpz_divexact(d, n_1, d); // d = (n - 1) / 2^s [divisão exata de n_1 por d]
+    s = mpz_scan1(n_1, 0);
+    mpz_fdiv_q_2exp(d, n_1, s);//d=temp/2^s
 
-    for (i = 0; i < reps; i++)
+    for (i = 0; i < reps; i++) 
     {
-        // Gera um número aleatório a no intervalo ]1, n-1[
-        do
-        {
-            mpz_urandomm(a, state, n); // número aleatório de 0 até n-1
+      // Gera um número aleatório a no intervalo [2, n − 2]
+        do {
+          mpz_urandomm(a, state, n_1);     // número aleatório de 0 até n-1
         } while (mpz_cmp_ui(a, 1) <= 0); // Repete até que a > 1
 
-        // Exponenciação modular: y = a^d mod n
-        ExpoM(y, a, d, n);
+        mpz_powm(x, a, d, n);//x = a^d mod n
 
-        pode_ser_primo = 0; // Assume que é composto a princípio
+          for (r = 0; r < s; r++) 
+          {
+            mpz_powm_ui(y, x, 2, n);//y = x^2 mod n
+              if (mpz_cmp_ui(y, 1) == 0 && mpz_cmp_ui(x, 1) != 0 && mpz_cmp(x, n_1) != 0) 
+              {
+                return 0;
+              }
+            mpz_set(x, y);// x = y
+          }
 
-        // Verifica s vezes
-        for (r = 0; r < s; r++) 
+        if (mpz_cmp_ui(y, 1) != 0) 
         {
-            // Exponenciação modular: (2^r) * d
-            mpz_set_ui(temp, 2);
-            mpz_pow_ui(exp_r_d, temp, r); // exp_r_d = 2^r
-            mpz_mul(exp_r_d, exp_r_d, d); // exp_r_d = (2^r) * d
-            ExpoM(x, a, exp_r_d, n); // x = a^(2^r * d) % n
-
-            if (mpz_cmp_ui(y, 1) == 0 || mpz_cmp(x, n_1) == 0)
-            {
-                pode_ser_primo = 1; // Não é composto se y == 1 ou x == n - 1
-                break;
-            }
-
-            mpz_set(y, x); // Atualiza y
-        }
-
-        if (pode_ser_primo == 0)
-        {
-            break;
+          return 0;
         }
     }
-
-    mpz_clears(a, x, y, n_1, d, temp, exp_r_d, NULL);
-    gmp_randclear(state);
-
-    return pode_ser_primo;
+    return 1;
 }
 
 void ExpoM(mpz_t resultado, const mpz_t base, const mpz_t expoente, const mpz_t mod)
