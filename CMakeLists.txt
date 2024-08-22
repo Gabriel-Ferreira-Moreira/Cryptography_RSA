@@ -26,4 +26,6 @@ target_link_libraries(ExpoM benchmark gmp)
 add_executable(Smart_guess_primes Smart_guess_primes.cpp)
 target_link_libraries(Smart_guess_primes benchmark gmp)
 
+add_executable(Multiplication Multiplication.c)
+target_link_libraries(Multiplication benchmark gmp)
 
