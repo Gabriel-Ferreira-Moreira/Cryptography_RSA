@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -119,7 +120,7 @@ int main()
     uint64_t low = (uint64_t)(result);
 
     // Imprime o número de 128 bits como dois valores de 64 bits
-    printf("Result (128 bits) = %016lx%016lx\n", high, low);
+    printf("Result (128 bits) = %016"PRIx64"%016"PRIx64"\n", high, low);
 
     return 0;
 }
