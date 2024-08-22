@@ -53,12 +53,12 @@ void mul(uint32_t D[], uint32_t A[], uint32_t B[])
 
     // Adiciona carry de D1 para D2, e de D2 para D3
     carry = D1 >> 28;
-    D1 &= 0x0FFFFFFF;
-    D2 += carry;
+    D1 = D1 & 0x0FFFFFFF;
+    D2 = D2 + carry;
 
     carry = D2 >> 28;
-    D2 &= 0x0FFFFFFF;
-    D3 += carry;
+    D2 = D2 & 0x0FFFFFFF;
+    D3 = D3 + carry;
 
     // Organizar os valores
     carry = D1 & 0x0000000F;
