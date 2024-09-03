@@ -31,3 +31,7 @@ target_link_libraries(Smart_guess_primes benchmark::benchmark ${GMP_LIBRARIES})
 add_executable(Multiplication Multiplication.c)
 target_include_directories(Multiplication PRIVATE ${GMP_INCLUDES})
 target_link_libraries(Multiplication benchmark::benchmark ${GMP_LIBRARIES})
+
+add_executable(Addition Addition.c)
+target_include_directories(Addition PRIVATE ${GMP_INCLUDES})
+target_link_libraries(Addition benchmark::benchmark ${GMP_LIBRARIES})
