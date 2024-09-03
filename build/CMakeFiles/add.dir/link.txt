@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/add.dir/add.c.o -o add  -lbenchmark -lgmp 

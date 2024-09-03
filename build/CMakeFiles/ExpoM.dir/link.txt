@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/ExpoM.dir/ExpoM.cpp.o -o ExpoM  -lbenchmark -lgmp 

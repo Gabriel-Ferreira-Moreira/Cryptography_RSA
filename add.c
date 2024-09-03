@@ -103,6 +103,7 @@ int main() {
   printf("D[0] = %08x\n", D[0]);
   printf("D[1] = %08x\n", D[1]);
 
+
   printf("D = 0x%06x%08x\n",D[1], D[0]);
 
 

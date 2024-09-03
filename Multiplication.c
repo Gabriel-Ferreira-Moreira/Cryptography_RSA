@@ -56,7 +56,8 @@ void convert_to_saturated(uint32_t D[], int size)
 
 // Função que converte um número de 64 bits em uma representação de dois números
 // de 32 bits, manipulando os bits superiores e inferiores de forma específica.
-void convert_to_unsaturated(uint32_t U[], uint32_t I[]) {
+void convert_to_unsaturated(uint32_t U[], uint32_t I[]) 
+{
   uint32_t temp;
 
   // U[1] recebe os 32 bits superiores de I[1], deslocados para a esquerda por 4

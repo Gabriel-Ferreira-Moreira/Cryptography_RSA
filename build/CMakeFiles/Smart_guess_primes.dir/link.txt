@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/Smart_guess_primes.dir/Smart_guess_primes.cpp.o -o Smart_guess_primes  -lbenchmark -lgmp 

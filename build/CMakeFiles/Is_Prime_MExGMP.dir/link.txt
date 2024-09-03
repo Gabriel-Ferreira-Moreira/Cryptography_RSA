@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/Is_Prime_MExGMP.dir/Is_Prime_MExGMP.cpp.o -o Is_Prime_MExGMP  -lbenchmark -lgmp 
