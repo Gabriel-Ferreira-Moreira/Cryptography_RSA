@@ -1,0 +1,8 @@
+/mnt/c/ProjetoVS/build/CMakeFiles/RSA_Primitive.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/crivo.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/Is_Prime_MExGMP.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/ExpoM.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/Smart_guess_primes.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/add.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/edit_cache.dir
+/mnt/c/ProjetoVS/build/CMakeFiles/rebuild_cache.dir

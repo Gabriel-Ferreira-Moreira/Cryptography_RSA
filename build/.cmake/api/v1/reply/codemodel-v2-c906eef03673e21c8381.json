@@ -1,0 +1,105 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Cryptography_RSA",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ExpoM::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ExpoM-Debug-97408aff8c8e7e49354f.json",
+					"name" : "ExpoM",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Is_Prime_MExGMP::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Is_Prime_MExGMP-Debug-db148029a702a7bcb25f.json",
+					"name" : "Is_Prime_MExGMP",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RSA_Primitive::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RSA_Primitive-Debug-5db8e559d279e2993a9f.json",
+					"name" : "RSA_Primitive",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Smart_guess_primes::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Smart_guess_primes-Debug-251e6acde57cbc94f4e4.json",
+					"name" : "Smart_guess_primes",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "add::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-add-Debug-722d426fff4d8a1bb8c0.json",
+					"name" : "add",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "crivo::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-crivo-Debug-19995590337a4c83b00b.json",
+					"name" : "crivo",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/mnt/c/ProjetoVS/build",
+		"source" : "/mnt/c/ProjetoVS"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/mnt/c/ProjetoVS/build",
+  "command": "/usr/bin/cc -g -o CMakeFiles/RSA_Primitive.dir/RSA_Primitive.c.o -c /mnt/c/ProjetoVS/RSA_Primitive.c",
+  "file": "/mnt/c/ProjetoVS/RSA_Primitive.c"
+},
+{
+  "directory": "/mnt/c/ProjetoVS/build",
+  "command": "/usr/bin/cc -g -o CMakeFiles/crivo.dir/crivo.c.o -c /mnt/c/ProjetoVS/crivo.c",
+  "file": "/mnt/c/ProjetoVS/crivo.c"
+},
+{
+  "directory": "/mnt/c/ProjetoVS/build",
+  "command": "/usr/bin/c++ -g -std=gnu++11 -o CMakeFiles/Is_Prime_MExGMP.dir/Is_Prime_MExGMP.cpp.o -c /mnt/c/ProjetoVS/Is_Prime_MExGMP.cpp",
+  "file": "/mnt/c/ProjetoVS/Is_Prime_MExGMP.cpp"
+},
+{
+  "directory": "/mnt/c/ProjetoVS/build",
+  "command": "/usr/bin/c++ -g -std=gnu++11 -o CMakeFiles/ExpoM.dir/ExpoM.cpp.o -c /mnt/c/ProjetoVS/ExpoM.cpp",
+  "file": "/mnt/c/ProjetoVS/ExpoM.cpp"
+},
+{
+  "directory": "/mnt/c/ProjetoVS/build",
+  "command": "/usr/bin/c++ -g -std=gnu++11 -o CMakeFiles/Smart_guess_primes.dir/Smart_guess_primes.cpp.o -c /mnt/c/ProjetoVS/Smart_guess_primes.cpp",
+  "file": "/mnt/c/ProjetoVS/Smart_guess_primes.cpp"
+},
+{
+  "directory": "/mnt/c/ProjetoVS/build",
+  "command": "/usr/bin/cc -g -o CMakeFiles/add.dir/add.c.o -c /mnt/c/ProjetoVS/add.c",
+  "file": "/mnt/c/ProjetoVS/add.c"
+}
+]

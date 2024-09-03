@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "gerator_2_randnumber": "c",
+        "private_key": "c",
+        "functional": "cpp",
+        "random": "cpp",
+        "cmath": "cpp"
+    },
+    "lldb.displayFormat": "hex",
+    "lldb.showDisassembly": "auto",
+    "lldb.dereferencePointers": true,
+    "lldb.consoleMode": "commands"
+}
