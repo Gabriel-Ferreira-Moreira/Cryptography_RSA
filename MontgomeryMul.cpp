@@ -3,32 +3,33 @@
 #include <benchmark/benchmark.h>
 
 // Função para multiplicação de Montgomery
-void MontgomeryMul(mpz_t resultado, const mpz_t a, const mpz_t b, const mpz_t mod, const mpz_t R_inv, const mpz_t R, const mpz_t mu);
+void MontgomeryMul(mpz_t resultado, mpz_t P, const mpz_t mod, const mpz_t R, const mpz_t mu);
 void ajustar_R(mpz_t R, const mpz_t mod);
 
 
 static void BM_Montg(benchmark::State& state) 
 {
-    mpz_t a, b, mod, R, R_inv, mu, resultado;
+    mpz_t a, b, mod, R, R_inv, mu, resultado, P;
 
     mpz_inits(a, b, mod, R, R_inv, mu, resultado, NULL);
 
     // Defina os valores de a, b, mod e R aqui
-    mpz_set_ui(a, 1232);
-    mpz_set_ui(b, 124);
+    mpz_set_ui(a, 42);
+    mpz_set_ui(b, 17);
     mpz_set_ui(mod, 97);
-    mpz_set_ui(R, 100);
+    mpz_set_ui(R, 128);
 
     // Precompute R_inv and mu
-    mpz_invert(R_inv, R, mod);
+    //mpz_invert(R_inv, R, mod);
     mpz_invert(mu, mod, R);
     mpz_neg(mu, mu);
     mpz_mod(mu, mu, R);
+    mpz_mul(P, a, b);           // P = a * b
 
         for (auto _ : state)
       {
         // Calcula a exponenciação modular
-        MontgomeryMul(resultado, a, b, mod, R_inv, R, mu);
+        MontgomeryMul(resultado, P, mod, R, mu);
       }
 
        
@@ -46,8 +47,8 @@ static void BM_MulMod_GMP(benchmark::State& state)
         mpz_inits(a, b, mod, resultado, temp, NULL);
 
         // Defina os valores de a, b, mod e R aqui
-          mpz_set_ui(a, 1232);
-        mpz_set_ui(b, 124);
+        mpz_set_ui(a, 42);
+        mpz_set_ui(b, 17);
         mpz_set_ui(mod, 97);
 
          for (auto _ : state) 
@@ -69,42 +70,36 @@ static void BM_MulMod_GMP(benchmark::State& state)
     BENCHMARK_MAIN();
 
 
-   void MontgomeryMul(mpz_t resultado, const mpz_t a, const mpz_t b, const mpz_t mod, const mpz_t R, const mpz_t R_inv, const mpz_t mu) 
+ void MontgomeryMul(mpz_t resultado, mpz_t P, const mpz_t mod, const mpz_t R, const mpz_t mu) 
    {
-    mpz_t A_prime, B_prime, T, m, u;
-    mpz_inits(A_prime, B_prime, T, m, u, NULL);
+    mpz_t q, temp;
 
-    // Passo 1: Transforma a e b para o domínio de Montgomery
-    mpz_mul(A_prime, a, R);
-    mpz_mod(A_prime, A_prime, mod); // A' = (a * R) % mod
+    // Inicializa as variáveis
+    mpz_inits(q, temp, NULL);
 
-    mpz_mul(B_prime, b, R);
-    mpz_mod(B_prime, B_prime, mod); // B' = (b * R) % mod
+    
+    // Passo 1: q ← mu * (a * b % R) % R
+    mpz_fdiv_q_2exp(P, P, mpz_scan1(P, 0));           // P = P % R
+    mpz_mul(q, mu, P);          // q = mu * (a * b % R)
+    mpz_fdiv_q_2exp(q, q, mpz_scan1(P, 0));           // q = q % R
+ 
 
-    // Passo 2: Multiplicação de A' e B' (sem mod ainda)
-    mpz_mul(T, A_prime, B_prime);
+    // Passo 2: C ← (P + N * q) / R
+    mpz_mul(temp, mod, q);        // temp = N * q
+    mpz_add(temp, temp, P);     // temp = P + N * q
+    mpz_fdiv_q_2exp(resultado, temp, mpz_scan1(P, 0)); // C = (P + N * q)  % R
 
-    // Passo 3: Redução de Montgomery
-    mpz_mul(m, T, mu); 
-    mpz_mod(m, m, R); // m = (T * mu) mod R
 
-    // u = (T + m * mod) / R
-    mpz_mul(u, m, mod);
-    mpz_add(u, u, T);
-    mpz_fdiv_q(u, u, R);
-
-    // Passo 4: Ajuste se necessário
-    if (mpz_cmp(u, mod) >= 0) {
-        mpz_sub(u, u, mod);
+    // Passo 3: Ajuste se C ≥ N
+    if (mpz_cmp(resultado, mod) >= 0) 
+    {
+        mpz_sub(resultado, resultado, mod);       // C = C - N
     }
 
-    // Passo 5: Converte de volta do domínio de Montgomery
-    mpz_mul(resultado, u, R_inv);
-    mpz_mod(resultado, resultado, mod);
-
-    // Liberação de variáveis temporárias
-    mpz_clears(A_prime, B_prime, T, m, u, NULL);
+    // Libera a memória das variáveis temporárias
+    mpz_clears(q, temp, NULL);
 }
+
 
 void ajustar_R(mpz_t R, const mpz_t mod) 
 {
