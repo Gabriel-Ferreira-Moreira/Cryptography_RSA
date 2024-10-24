@@ -16,7 +16,7 @@ mpz_t pot, exp, res;
 
     while (mpz_cmp_ui(exp, 0) > 0) 
     {
-        // Se o bit menos significativo de exp é 1
+        // Se o bit menos significativo de exp é 1 (se é impar)
         if (mpz_odd_p(exp)) { // if (expoente % 2 == 1)
             mpz_mul(res, res, pot);
             mpz_mod(res, res, mod); // resultado = (resultado * pot) % mod
@@ -25,7 +25,7 @@ mpz_t pot, exp, res;
         mpz_mul(pot, pot, pot);
         mpz_mod(pot, pot, mod); // pot = (pot * pot) % mod
 
-        mpz_fdiv_q_2exp(exp, exp, 1); // exp = exp/2
+        mpz_fdiv_q_2exp(exp, exp, 1); // exp = exp/2 (arredonda pra baixo)
     }
 
     mpz_set(resultado, res); // resultado = res
