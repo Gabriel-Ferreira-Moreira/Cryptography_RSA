@@ -134,41 +134,9 @@ static void BM_ExpoM_GMP(benchmark::State& state)
     BENCHMARK(BM_ExpoM_GMP);
     BENCHMARK_MAIN();
 
-void MontgomeryMul(mpz_t resultado, const mpz_t a, const mpz_t b, const mpz_t mod, const mpz_t R, const mpz_t R_inv, const mpz_t mu) 
-   {
-    mpz_t A_prime, B_prime, T, m, u;
-    mpz_inits(A_prime, B_prime, T, m, u, NULL);
-
-    // Passo 1: Transforma a e b para o domínio de Montgomery
-    mpz_mul(A_prime, a, R);
-    mpz_mod(A_prime, A_prime, mod); // A' = (a * R) % mod
-
-    mpz_mul(B_prime, b, R);
-    mpz_mod(B_prime, B_prime, mod); // B' = (b * R) % mod
-
-    // Passo 2: Multiplicação de A' e B' (sem mod ainda)
-    mpz_mul(T, A_prime, B_prime);
-
-    // Passo 3: Redução de Montgomery
-    mpz_mul(m, T, mu); // m = (T * mu) mod R
-    mpz_mod(m, m, R);
-
-    // u = (T + m * mod) / R
-    mpz_mul(u, m, mod);
-    mpz_add(u, u, T);
-    mpz_fdiv_q(u, u, R);
-
-    // Passo 4: Ajuste se necessário
-    if (mpz_cmp(u, mod) >= 0) {
-        mpz_sub(u, u, mod);
-    }
-
-    // Passo 5: Converte de volta do domínio de Montgomery
-    mpz_mul(resultado, u, R_inv);
-    mpz_mod(resultado, resultado, mod);
-
-    // Liberação de variáveis temporárias
-    mpz_clears(A_prime, B_prime, T, m, u, NULL);
+void MontgomeryMul(mpz_t resultado, const mpz_t a, const mpz_t b, const mpz_t mod, const mpz_t R, const mpz_t R_inv, const mpz_t mu)
+{ 
+   
 }
 
 void ajustar_R(mpz_t R, const mpz_t mod) 
